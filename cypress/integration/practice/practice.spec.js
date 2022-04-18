@@ -42,12 +42,12 @@ describe('React TodoMVC practice', () => {
     ;
   })
 
-  it.only('can mark a todo as "completed"', () => {
+  it('can mark a todo as "completed"', () => {
     // Write a test that ensures that a todo can be "completed"
     // Hint: You will need to verify the class name of the completed todo
     cy.get(".new-todo")
       .type("Testing and marking as completed{enter}");
-      // .type("Testing and marking as completed{enter}");
+    // .type("Testing and marking as completed{enter}");
 
     cy.get("ul.todo-list input").first().click();
 
@@ -58,7 +58,7 @@ describe('React TodoMVC practice', () => {
     cy.get("ul.todo-list > li").each(($item, i, $listOfMarkedElements) => {
 
       // expect
-      expect ($item[i].getAttribute("class")).to.be.equal("completed");
+      expect($item[i].getAttribute("class")).to.be.equal("completed");
 
 
       // if $listOfMarkedElements[]
@@ -68,10 +68,31 @@ describe('React TodoMVC practice', () => {
 
   })
 
-  it('the "Clear completed" button clears all completed todos', () => {
+  it.only('the "Clear completed" button clears all completed todos', () => {
     // Write a test that ensures that the "Clear completed" removes
     // all completed todos from the app
     // Hint: You will need to verify the class name of the completed todo
+    cy.get(".new-todo")
+      .type("Testing and marking as completed{enter}")
+      .type("Testing and marking as completed{enter}")
+      .type("Testing and marking as completed{enter}");
+
+    cy.get("ul.todo-list input.toggle").each(($element, i, $listOfElements) => {
+
+      // console.log(i);
+      // let a = ;
+      cy.wrap($listOfElements[i]).click();
+
+
+    }).then(() => {
+      cy.get("button.clear-completed")
+        .should("be.visible")
+        .and("be.enabled")
+        .click();
+    });
+
+    cy.get("ul.todo-list li").should("have.length", 0);
+
   })
 
   it('allows you to edit a todo', () => {
