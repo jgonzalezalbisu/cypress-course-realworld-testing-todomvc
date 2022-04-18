@@ -4,7 +4,7 @@ describe('React TodoMVC practice', () => {
     cy.visit("localhost:8888");
   })
 
-  it.only('adds five todos', () => {
+  it('adds five todos', () => {
     // Without using the cy.createDefaultTodos() custom command
     // write a test that asserts you can add 5 todos
     // Hint: make sure to assert the length is equal to 5
@@ -19,11 +19,12 @@ describe('React TodoMVC practice', () => {
 
   })
 
-  it('focuses on the todo input field, when the app is first opened', () => {
+  it.only('focuses on the todo input field, when the app is first opened', () => {
     // Write a test that asserts that the input field
     // is focused automatically when the app is first loaded.
     // Hint: you will need to use cy.focused()
     // https://docs.cypress.io/api/commands/focused
+    cy.focused().should("have.class", "new-todo");
   })
 
   it('should clear text input field when an item is added', () => {
