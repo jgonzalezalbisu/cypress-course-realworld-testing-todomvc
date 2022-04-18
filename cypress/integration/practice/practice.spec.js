@@ -94,7 +94,7 @@ describe('React TodoMVC practice', () => {
 
   })
 
-  it.only('allows you to edit a todo', () => {
+  it('allows you to edit a todo', () => {
     // Write a test that ensures that you can edit a todo
     // Hint: You will need to use cy.dblclick()
     // https://docs.cypress.io/api/commands/dblclick
@@ -133,10 +133,44 @@ describe('React TodoMVC practice', () => {
 
   })
 
-  it('should save edits on blur', () => {
+  it.only('should save edits on blur', () => {
     // Write a test that ensures that an edited todo is saved when it is blurred
     // Hint: You will need to use cy.blur()
     // https://docs.cypress.io/api/commands/blur
+
+    const text = "Testing and marking as completed";
+
+    cy.get(".new-todo")
+      .type(`${text}{enter}`);
+
+    let a;
+    cy.get("ul.todo-list > li > div > label").then(($element) => {
+      a = $element.text();
+      cy.wrap(a).as("toCompare");
+      // cy.log(a);
+    }).then(() => {
+
+      cy.get("ul.todo-list")
+        .find("label")
+        .dblclick();
+
+      cy.get("ul.todo-list")
+        .find("li.editing")
+        .focus()
+        // .clear()
+        .blur()
+        // .type(`EDITED Item`).blur();
+
+      cy.get("@toCompare").then(($value) => {
+        cy.get("ul.todo-list").find("label").then(($finalValue) => {
+
+          expect($finalValue.text).to.not.be.equal($value);
+
+
+        });
+
+      });
+    });
   })
 
   it('should display the current number of todo items', () => {
