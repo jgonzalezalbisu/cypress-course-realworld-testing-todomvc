@@ -83,7 +83,6 @@ describe('React TodoMVC practice', () => {
       // let a = ;
       cy.wrap($listOfElements[i]).click();
 
-
     }).then(() => {
       cy.get("button.clear-completed")
         .should("be.visible")
