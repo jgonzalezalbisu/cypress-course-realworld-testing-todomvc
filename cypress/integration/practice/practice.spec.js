@@ -19,7 +19,7 @@ describe('React TodoMVC practice', () => {
 
   })
 
-  it.only('focuses on the todo input field, when the app is first opened', () => {
+  it('focuses on the todo input field, when the app is first opened', () => {
     // Write a test that asserts that the input field
     // is focused automatically when the app is first loaded.
     // Hint: you will need to use cy.focused()
@@ -29,9 +29,17 @@ describe('React TodoMVC practice', () => {
     cy.get(".new-todo").should("be.focused");
   })
 
-  it('should clear text input field when an item is added', () => {
+  it.only('should clear text input field when an item is added', () => {
     // Write a test that ensures that the input field is cleared
     // after adding a todo
+    cy.get(".new-todo")
+      .type("Testing and clearing{enter}")
+      .should("have.value", "");
+    cy.get(".new-todo")
+      .type("Testing and clearing")
+      .should("have.value", "Testing and clearing");
+
+    ;
   })
 
   it('can mark a todo as "completed"', () => {
