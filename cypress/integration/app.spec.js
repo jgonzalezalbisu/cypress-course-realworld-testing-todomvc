@@ -18,14 +18,31 @@ describe("React TodoMVC", () => {
   })
 
   it("adds three todos", () => {
-    cy.createDefaultTodos()
+    cy.createDefaultTodos().as("todos")
+    cy.get("@todos").should("have.length", 3)
 
-    cy.get(".todo-list li").should("have.length", 3)
   });
 
   it("should append new items to the bottom of the list", () => {
     cy.createDefaultTodos();
+    // Todo 1
+    cy.get(".todo-list li").eq(0).find("label").should("contain", TODO_ITEM_ONE)
+
+    // Todo 2
+    cy.get(".todo-list li").eq(1).find("label").should("contain", TODO_ITEM_TWO)
+
+    // Todo 3
+    cy.get(".todo-list li").eq(2).find("label").should("contain", TODO_ITEM_THREE)
+
+    cy.get(".todo-count").contains("3 items left");
 
   });
+
+  it.only("does NOT display the footer when there are no todos", () => {
+    cy.get(".footer").should("not.exist")
+    cy.get(".todo-list").should("not.exist")
+
+  })
+
 
 });
