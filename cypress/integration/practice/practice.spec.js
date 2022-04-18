@@ -68,7 +68,7 @@ describe('React TodoMVC practice', () => {
 
   })
 
-  it.only('the "Clear completed" button clears all completed todos', () => {
+  it('the "Clear completed" button clears all completed todos', () => {
     // Write a test that ensures that the "Clear completed" removes
     // all completed todos from the app
     // Hint: You will need to verify the class name of the completed todo
@@ -94,10 +94,43 @@ describe('React TodoMVC practice', () => {
 
   })
 
-  it('allows you to edit a todo', () => {
+  it.only('allows you to edit a todo', () => {
     // Write a test that ensures that you can edit a todo
     // Hint: You will need to use cy.dblclick()
     // https://docs.cypress.io/api/commands/dblclick
+    const text = "Testing and marking as completed";
+
+    cy.get(".new-todo")
+      .type(`${text}{enter}`);
+
+    let a;
+    cy.get("ul.todo-list > li > div > label").then(($element) => {
+      a = $element.text();
+      cy.wrap(a).as("toCompare");
+      // cy.log(a);
+    }).then(() => {
+
+      cy.get("ul.todo-list")
+        .find("label")
+        .dblclick();
+
+      cy.get("ul.todo-list")
+        .find("li.editing")
+        .clear()
+        .type(`EDITED Item{enter}`);
+
+      cy.get("@toCompare").then(($value) => {
+        cy.get("ul.todo-list").find("label").then(($finalValue) => {
+
+          expect($finalValue.text).to.not.be.equal($value);
+
+
+        });
+
+      });
+    });
+
+
   })
 
   it('should save edits on blur', () => {
