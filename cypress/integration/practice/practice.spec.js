@@ -1,9 +1,22 @@
 describe('React TodoMVC practice', () => {
 
-  it('adds five todos', () => {
+  beforeEach(() => {
+    cy.visit("localhost:8888");
+  })
+
+  it.only('adds five todos', () => {
     // Without using the cy.createDefaultTodos() custom command
     // write a test that asserts you can add 5 todos
     // Hint: make sure to assert the length is equal to 5
+    cy.get('.new-todo')
+      .type(`One{enter}`)
+      .type(`Two{enter}`)
+      .type(`Three{enter}`)
+      .type(`Four{enter}`)
+      .type(`Five{enter}`);
+
+    cy.get("ul.todo-list > li").should("have.length", 5);
+
   })
 
   it('focuses on the todo input field, when the app is first opened', () => {
