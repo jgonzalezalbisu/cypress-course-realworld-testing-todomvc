@@ -26,6 +26,7 @@ describe('React TodoMVC practice', () => {
     // https://docs.cypress.io/api/commands/focused
     cy.focused().should("have.class", "new-todo");
     cy.focused().should("have.attr", "placeholder", "What needs to be done?");
+    cy.get(".new-todo").should("be.focused");
   })
 
   it('should clear text input field when an item is added', () => {
