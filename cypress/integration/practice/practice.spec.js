@@ -29,7 +29,7 @@ describe('React TodoMVC practice', () => {
     cy.get(".new-todo").should("be.focused");
   })
 
-  it.only('should clear text input field when an item is added', () => {
+  it('should clear text input field when an item is added', () => {
     // Write a test that ensures that the input field is cleared
     // after adding a todo
     cy.get(".new-todo")
@@ -42,9 +42,30 @@ describe('React TodoMVC practice', () => {
     ;
   })
 
-  it('can mark a todo as "completed"', () => {
+  it.only('can mark a todo as "completed"', () => {
     // Write a test that ensures that a todo can be "completed"
     // Hint: You will need to verify the class name of the completed todo
+    cy.get(".new-todo")
+      .type("Testing and marking as completed{enter}");
+      // .type("Testing and marking as completed{enter}");
+
+    cy.get("ul.todo-list input").first().click();
+
+    cy.get("span.todo-count")
+      .should("have.text", "0 items left");
+
+
+    cy.get("ul.todo-list > li").each(($item, i, $listOfMarkedElements) => {
+
+      // expect
+      expect ($item[i].getAttribute("class")).to.be.equal("completed");
+
+
+      // if $listOfMarkedElements[]
+
+
+    });
+
   })
 
   it('the "Clear completed" button clears all completed todos', () => {
